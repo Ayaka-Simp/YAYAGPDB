@@ -28,11 +28,4 @@ client.once('ready', () => {
     })
 });
 
-client.on('interactionCreate', async interaction => {
-   console.log('Some Interaction was used')
-});
-client.on('messageCreate', async message => {
-   console.log('Some message was sent')
-});
-
 client.login(config.token);
