@@ -37,6 +37,13 @@ module.exports = {
             await message.delete()
         }
 
+        if (amount > 100) {
+            return {
+                content: "Amount cannot be over 100!",
+                ephemeral: true
+            }
+        }
+
         // Bulk delete
 
         // const { size } = await channel.bulkDelete(amount, true)

@@ -19,6 +19,7 @@
   "homepage": "https://github.com/Veemo-9785/YAYAGPDB#readme",
   "dependencies": {
     "discord.js": "^13.3.1",
+    "dotenv": "^10.0.0",
     "nodemon": "^2.0.15",
     "ts-node": "^10.4.0",
     "wokcommands": "^1.5.3"

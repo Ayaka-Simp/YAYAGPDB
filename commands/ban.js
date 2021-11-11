@@ -4,9 +4,9 @@ const { MessageActionRow, MessageButton, MessageEmbed, DiscordAPIError } = requi
 
 module.exports = {
     category: "Moderation",
-    description: "Kicks a member",
+    description: "Bans a member",
 
-    requiredPermissions: ["KICK_MEMBERS"],
+    requiredPermissions: ["BAN_MEMBERS"],
 
     minArgs: 1,
     maxArgs: 2,
@@ -23,15 +23,15 @@ module.exports = {
         const member = guild.members.cache.get(memberId);
         const embed = new MessageEmbed()
             .setTitle("Confirmation")
-            .setDescription(`Are you sure you want to kick <@${member?.id}>?`);
+            .setDescription(`Are you sure you want to ban <@${member?.id}>?`);
 
         const yesButton = new MessageButton()
-            .setCustomId("confirmedKick")
+            .setCustomId("confirmedBan")
             .setLabel("Proceed")
             .setStyle('SUCCESS');
 
         const noButton = new MessageButton()
-            .setCustomId("canceledKick")
+            .setCustomId("canceledBan")
             .setLabel("Cancel")
             .setStyle("DANGER");
 
@@ -53,7 +53,7 @@ module.exports = {
 
         const filter = (btnInt) => {
             const author = message ? message.author : interaction.user;
-            return btnInt.user.id === author.id && btnInt.customId === "confirmedKick" || btnInt.customId === "canceledKick";
+            return btnInt.user.id === author.id && btnInt.customId === "confirmedBan" || btnInt.customId === "canceledBan";
         };
 
         const collector = channel.createMessageComponentCollector({
@@ -65,34 +65,34 @@ module.exports = {
 
         collector.on('collect', async (i) => {
             try {
-                if (i.customId === "confirmedKick") {
+                if (i.customId === "confirmedBan") {
                     if (args) {
-                        await member.kick(args.shift())
+                        await member.ban(args.shift())
                     } else {
-                        await member.kick()
+                        await member.ban()
                     }
                     message
-                        ? message.reply(`Kicked <@${member?.id}>`)
+                        ? message.reply(`Banned <@${member?.id}>`)
                         : i.reply({
                             ephemeral: true,
-                            content: `Kicked <@${member?.id}>`
+                            content: `Banned <@${member?.id}>`
                         });
                 } else {
                     message
-                        ? message.reply(`Kick canceled.`)
+                        ? message.reply(`Ban canceled.`)
                         : i.reply({
                             ephemeral: true,
-                            content: `Kick canceled.`
+                            content: `Ban canceled.`
                         });
                 }
             }
             catch (err) {
                 if (err instanceof DiscordAPIError) {
                     message
-                        ? message.reply(`Couldn't kick <@${member.id}> because I am too low in the hiearchy!`)
+                        ? message.reply(`Couldn't ban <@${member.id}> because I am too low in the hiearchy!`)
                         : i.reply({
                             ephemeral: true,
-                            content: `Couldn't kick <@${member.id}> because I am too low in the hiearchy!`
+                            content: `Couldn't ban <@${member.id}> because I am too low in the hiearchy!`
                         })
                 }
             }            
