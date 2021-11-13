@@ -1,4 +1,6 @@
-module.exports = (client) => {
+import { Client } from "discord.js";
+
+export default (client: Client) => {
     const statusOptions = [
         "https://woomy.xyz.",
         "around with discord.js.",
@@ -24,7 +26,7 @@ module.exports = (client) => {
     updateStatus()
 };
 
-module.exports.config = {
+export const config = {
     dbName: 'STATUS_CHANGER',
     displayName: 'Status Changer',
 };

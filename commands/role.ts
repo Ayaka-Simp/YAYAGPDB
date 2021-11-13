@@ -1,8 +1,10 @@
 // export default {}
 
+import { ICommand } from "wokcommands";
+
 const actions = ['give', 'remove', 'has']
 
-module.exports =  {
+export default {
     category: 'Configuration',
     description: 'Gives a role to a user',
 
@@ -79,4 +81,4 @@ module.exports =  {
 
         return "Unknown action";
     },
-}
+} as ICommand

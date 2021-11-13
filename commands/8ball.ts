@@ -1,4 +1,6 @@
-module.exports = {
+import { ICommand } from "wokcommands";
+
+export default {
     category: "Fun",
     description: "Classic magic 8 ball toy simulated in a command!",
 
@@ -17,4 +19,4 @@ module.exports = {
 
         return `Question: ${args.join(' ')}\n\nAnswer: ${responses[indexOfList]}`
     }
-}
+} as ICommand

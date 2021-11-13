@@ -1,6 +1,9 @@
 // module.exports = {}
 
-module.exports = {
+import { ICommand } from "wokcommands";
+import { TextChannel } from 'discord.js'
+
+export default {
     category: "Configuration",
     description: "Sends a message in the channel specified",
 
@@ -23,7 +26,7 @@ module.exports = {
         args.shift();
         const text = args.join(' ');
 
-        (channel).send(text)
+        (channel as TextChannel).send(text)
 
         if (interaction) {
             interaction.reply({
@@ -32,4 +35,4 @@ module.exports = {
             })
         }
     }
-}
+} as ICommand

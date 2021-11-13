@@ -1,5 +1,7 @@
 // module.exports = {}
 
+import { ICommand } from "wokcommands"
+
 async function clearAllMessagesByCloning(channel, message) {
     // Clone channel
     const newChannel = await channel.clone()
@@ -9,7 +11,7 @@ async function clearAllMessagesByCloning(channel, message) {
     newChannel.send(message)
 }
 
-module.exports = {
+export default {
     category: 'Moderation',
     description: 'Deletes one or more messages at once. Leave amount blank to clone-delete the channel.',
 
@@ -63,4 +65,4 @@ module.exports = {
         channel.send(reply)
         
     }
-}
+} as ICommand

@@ -1,12 +1,14 @@
 // module.exports = {}
 
-const { MessageActionRow, MessageButton, MessageEmbed, DiscordAPIError } = require("discord.js");
+import { ICommand } from "wokcommands";
 
-module.exports = {
+import { MessageActionRow, MessageButton, MessageEmbed, DiscordAPIError, ButtonInteraction, Interaction } from "discord.js";
+
+export default {
     category: "Moderation",
-    description: "Bans a member",
+    description: "Kicks a member",
 
-    requiredPermissions: ["BAN_MEMBERS"],
+    requiredPermissions: ["KICK_MEMBERS"],
 
     minArgs: 1,
     maxArgs: 2,
@@ -23,15 +25,15 @@ module.exports = {
         const member = guild.members.cache.get(memberId);
         const embed = new MessageEmbed()
             .setTitle("Confirmation")
-            .setDescription(`Are you sure you want to ban <@${member?.id}>?`);
+            .setDescription(`Are you sure you want to kick <@${member?.id}>?`);
 
         const yesButton = new MessageButton()
-            .setCustomId("confirmedBan")
+            .setCustomId("confirmedKick")
             .setLabel("Proceed")
             .setStyle('SUCCESS');
 
         const noButton = new MessageButton()
-            .setCustomId("canceledBan")
+            .setCustomId("canceledKick")
             .setLabel("Cancel")
             .setStyle("DANGER");
 
@@ -51,51 +53,51 @@ module.exports = {
                 allowedMentions: { users: [] }
             });
 
-        const filter = (btnInt) => {
+        const filter = (btnIn: Interaction) => {
+            const btnInt = btnIn as ButtonInteraction
             const author = message ? message.author : interaction.user;
-            return btnInt.user.id === author.id && btnInt.customId === "confirmedBan" || btnInt.customId === "canceledBan";
+            return btnInt.user.id === author.id && btnInt.customId === "confirmedKick" || btnInt.customId === "canceledKick";
         };
 
         const collector = channel.createMessageComponentCollector({
             filter,
             max: 1,
             time: 1000 * 30,
-            
         });
 
-        collector.on('collect', async (i) => {
+        collector.on('collect', async (i: ButtonInteraction) => {
             try {
-                if (i.customId === "confirmedBan") {
+                if (i.customId === "confirmedKick") {
                     if (args) {
-                        await member.ban(args.shift())
+                        await member.kick(args.shift())
                     } else {
-                        await member.ban()
+                        await member.kick()
                     }
                     message
-                        ? message.reply(`Banned <@${member?.id}>`)
+                        ? message.reply(`Kicked <@${member?.id}>`)
                         : i.reply({
                             ephemeral: true,
-                            content: `Banned <@${member?.id}>`
+                            content: `Kicked <@${member?.id}>`
                         });
                 } else {
                     message
-                        ? message.reply(`Ban canceled.`)
+                        ? message.reply(`Kick canceled.`)
                         : i.reply({
                             ephemeral: true,
-                            content: `Ban canceled.`
+                            content: `Kick canceled.`
                         });
                 }
             }
             catch (err) {
                 if (err instanceof DiscordAPIError) {
                     message
-                        ? message.reply(`Couldn't ban <@${member.id}> because I am too low in the hiearchy!`)
+                        ? message.reply(`Couldn't kick <@${member.id}> because I am too low in the hiearchy!`)
                         : i.reply({
                             ephemeral: true,
-                            content: `Couldn't ban <@${member.id}> because I am too low in the hiearchy!`
+                            content: `Couldn't kick <@${member.id}> because I am too low in the hiearchy!`
                         })
                 }
             }            
         });
     },
-}
+} as ICommand
