@@ -1,8 +1,9 @@
 // module.exports = {}
 
+import { TextChannel } from "discord.js"
 import { ICommand } from "wokcommands"
 
-async function clearAllMessagesByCloning(channel, message) {
+async function clearAllMessagesByCloning(channel: TextChannel, message: string) {
     // Clone channel
     const newChannel = await channel.clone()
 
@@ -26,7 +27,7 @@ export default {
     
     callback: async ({ message, interaction, channel, args }) => {
         //
-        const amount = args.length ? parseInt(args.shift()) : 0
+        const amount = args ? parseInt(args?.shift()) : 0
 
         if (!amount) {
             await clearAllMessagesByCloning(channel, `Deleted all messages`)

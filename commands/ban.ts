@@ -1,6 +1,7 @@
 // module.exports = {}
 
 import { ButtonInteraction, Interaction } from "discord.js";
+import { ICommand } from "wokcommands";
 
 const { MessageActionRow, MessageButton, MessageEmbed, DiscordAPIError } = require("discord.js")
 
@@ -22,7 +23,7 @@ module.exports = {
 
     callback: ({ guild, message, interaction, channel, args }) => {
         const memberId = args.shift();
-        const member = guild.members.cache.get(memberId);
+        const member = guild!.members.cache.get(memberId!)!;
         const embed = new MessageEmbed()
             .setTitle("Confirmation")
             .setDescription(`Are you sure you want to ban <@${member?.id}>?`);
@@ -66,11 +67,13 @@ module.exports = {
             
         });
 
-        collector.on('collect', async (i) => {
+        collector.on('collect', async (i: ButtonInteraction) => {
             try {
                 if (i.customId === "confirmedBan") {
-                    if (args) {
-                        await member.ban(args.shift())
+                    if (args.shift()) {
+                        await member.ban({
+                            reason: args.shift()
+                        })
                     } else {
                         await member.ban()
                     }
@@ -101,4 +104,4 @@ module.exports = {
             }            
         });
     },
-}
+} as ICommand
