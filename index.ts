@@ -25,6 +25,7 @@ client.once('ready', () => {
         botOwners: ['717224587951079445'],
         dbOptions,
         mongoUri: config.mongoUri,
+        typeScript: true
     })
 });
 
