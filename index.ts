@@ -1,7 +1,7 @@
 import { Client, Intents } from 'discord.js';
 import WOKCommands from 'wokcommands';
 import path from 'path';
-import config from './config.json';
+const config = require('./config.json')
 
 const client = new Client({
     intents: [

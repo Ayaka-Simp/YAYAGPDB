@@ -54,12 +54,9 @@ export default {
             });
 
         const filter = (btnIn: Interaction) => {
-            if (btnIn.isButton()) {
-                const btnInt = btnIn as ButtonInteraction
+            const btnInt = btnIn as ButtonInteraction
                 const author = message ? message.author : interaction.user;
                 return btnInt.user.id === author.id && btnInt.customId === "confirmedKick" || btnInt.customId === "canceledKick";
-        
-            }
         };
         const collector = channel.createMessageComponentCollector({
             filter,
