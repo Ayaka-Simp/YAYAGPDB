@@ -55,9 +55,11 @@ module.exports = {
             });
 
         const filter = (btnIn: Interaction) => {
-            const btnInt = btnIn as ButtonInteraction
-            const author = message ? message.author : interaction.user;
-            return btnInt.user.id === author.id && btnInt.customId === "confirmedBan" || btnInt.customId === "canceledBan";
+            if (btnIn.isButton()) {
+                const author = message ? message.author : interaction.user;
+                const btnInt = btnIn as ButtonInteraction
+                return btnInt.user.id === author.id && btnInt.customId === "confirmedBan" || btnInt.customId === "canceledBan";
+            }
         };
 
         const collector = channel.createMessageComponentCollector({
