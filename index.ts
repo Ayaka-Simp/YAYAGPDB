@@ -1,7 +1,7 @@
-const { Client, Intents } = require('discord.js')
-const WOKCommands = require('wokcommands')
-const path = require('path')
-const config = require('./config.json')
+import { Client, Intents } from 'discord.js';
+import WOKCommands from 'wokcommands';
+import path from 'path';
+import config from './config.json';
 
 const client = new Client({
     intents: [
