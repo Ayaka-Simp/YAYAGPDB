@@ -22,10 +22,10 @@ export default {
 
     callback: ({ guild, message, interaction, channel, args }) => {
         const memberId = args.shift();
-        const member = guild.members.cache.get(memberId);
+        const member = guild!.members.cache.get(memberId!);
         const embed = new MessageEmbed()
             .setTitle("Confirmation")
-            .setDescription(`Are you sure you want to kick <@${member?.id}>?`);
+            .setDescription(`Are you sure you want to kick <@${member!.id}>?`);
 
         const yesButton = new MessageButton()
             .setCustomId("confirmedKick")
@@ -69,15 +69,15 @@ export default {
             try {
                 if (i.customId === "confirmedKick") {
                     if (args) {
-                        await member.kick(args.shift())
+                        await member!.kick(args.shift())
                     } else {
-                        await member.kick()
+                        await member!.kick()
                     }
                     message
-                        ? message.reply(`Kicked <@${member?.id}>`)
+                        ? message.reply(`Kicked <@${member!.id}>`)
                         : i.reply({
                             ephemeral: true,
-                            content: `Kicked <@${member?.id}>`
+                            content: `Kicked <@${member!.id}>`
                         });
                 } else {
                     message
@@ -91,10 +91,10 @@ export default {
             catch (err) {
                 if (err instanceof DiscordAPIError) {
                     message
-                        ? message.reply(`Couldn't kick <@${member.id}> because I am too low in the hiearchy!`)
+                        ? message.reply(`Couldn't kick <@${member!.id}> because I am too low in the hiearchy!`)
                         : i.reply({
                             ephemeral: true,
-                            content: `Couldn't kick <@${member.id}> because I am too low in the hiearchy!`
+                            content: `Couldn't kick <@${member!.id}> because I am too low in the hiearchy!`
                         })
                 }
             }            

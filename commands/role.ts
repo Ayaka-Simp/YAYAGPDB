@@ -50,11 +50,11 @@ export default {
             )}`
         };
 
-        const memberId = args.shift().replace(/[<@!&>]/g, '');
-        const roleId = args.shift().replace(/[<@!&>]/g, '');
+        const memberId = args.shift()!.replace(/[<@!&>]/g, '');
+        const roleId = args.shift()!.replace(/[<@!&>]/g, '');
 
-        const member = guild.members.cache.get(memberId);
-        const role = guild.roles.cache.get(roleId);
+        const member = guild!.members.cache.get(memberId);
+        const role = guild!.roles.cache.get(roleId);
 
         if (!member) {
             return `Could not find member with ID ${memberId}`;

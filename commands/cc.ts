@@ -27,7 +27,7 @@ export default {
     
     callback: async ({ message, interaction, channel, args }) => {
         //
-        const amount = args ? parseInt(args?.shift()) : 0
+        const amount = args ? parseInt(args.shift()!) : 0
 
         if (!amount) {
             await clearAllMessagesByCloning(channel, `Deleted all messages`)
