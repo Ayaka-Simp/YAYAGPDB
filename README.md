@@ -6,6 +6,8 @@ This is so dumb.
 
 After cloning, install dependencies with `$ npm init`.
 
+Made with Worn Off Keys Commands (view docs [here](https://docs.wornoffkeys.com/))
+
 If you want to work on this with your own test bot, make a config.json and paste this text in:
 
 ```json
